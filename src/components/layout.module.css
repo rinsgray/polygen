@@ -1,0 +1,42 @@
+.topmenu{
+  position: fixed;
+  z-index: 1;
+  width: 110%;
+  background: rgba(18, 14, 33, 0.5);
+  color: black;
+  margin: -10px;
+  padding-top: 10px;
+}
+
+.topmenu ul{
+  list-style: none;
+}
+
+.topmenu li{
+  float: left;
+}
+
+.children{
+  padding-top: 180px;
+  width: 80%;
+  padding-left: 150px;
+  padding-bottom: 100%;
+}
+
+a {
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  font-size: 25px;
+  padding-left: 70px;
+  padding-top: 15px;
+  color: white;
+}
+
+h1 {
+  position: relative;
+  top: -33px;
+  padding: 10px;
+  font-size: 35px;
+  width: 140px;
+}

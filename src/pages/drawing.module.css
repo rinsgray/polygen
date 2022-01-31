@@ -1,0 +1,11 @@
+.rectangle{
+
+  margin-left: 10vw;
+  margin-right: 10vw;
+  padding-top: 20vh;
+  height: 40vh;
+  border-color: black;
+  border-style: double;
+  text-align: center;
+
+}
