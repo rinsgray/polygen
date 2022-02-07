@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+body {
+  background-color: #5A0DAC;
+  background-image: url(https://cdn.pixabay.com/photo/2016/06/02/02/33/triangles-1430105_960_720.png);
+  background-repeat:no-repeat;
+  background-position: 100% 0%;
+  background-attachment: fixed;
+  background-size: 100%;
+  font-family: 'Roboto', sans-serif;
+}

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import  Layout  from '../components/layout'
-
+import * as styles from"./link.module.css"
 
 export default function Home(){
   return(

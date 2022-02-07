@@ -3,9 +3,40 @@
   margin-left: 10vw;
   margin-right: 10vw;
   padding-top: 20vh;
-  height: 40vh;
+  height: 30vh;
   border-color: black;
   border-style: double;
   text-align: center;
+
+}
+
+.draw{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+button {
+  background: none;
+  border: 2px solid;
+  font: inherit;
+  line-height: 1;
+  margin: 0.5em;
+  padding: 1em 2em;
+  width: 10vw;
+}
+
+input{
+  background: none;
+  border: 2px solid;
+  font: inherit;
+  line-height: 1;
+  margin: 0.5em;
+  padding: 1em 2em;
+  width: 5.5vw;
+  text-align: center;
+}
+
+input :hover{
 
 }
