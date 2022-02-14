@@ -11,9 +11,11 @@ export default function Home(props){
   const pressEnter = (e) =>{
     if (e.keyCode === 13){
       let xyz = document.getElementById('xyz').value
-      let value = ""
       setInputNumber(xyz);
-      setInputValue(value);
+      setInputValue("");
+    }
+    else{
+      setInputValue()
     }
   };
 
