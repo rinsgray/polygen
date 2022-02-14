@@ -3,7 +3,21 @@ import  Layout  from '../components/layout'
 import * as styles from"./drawing.module.css"
 
 
-export default function Home(){
+
+export default function Home(props){
+
+  const [inputNumber, setInputNumber] = React.useState("XYZ")
+  const [inputValue, setInputValue] = React.useState()
+  const pressEnter = (e) =>{
+    if (e.keyCode === 13){
+      let xyz = document.getElementById('xyz').value
+      let value = ""
+      setInputNumber(xyz);
+      setInputValue(value);
+    }
+  };
+
+
   return(
     <Layout>
       <div className={styles.draw}>
@@ -12,7 +26,7 @@ export default function Home(){
       </div>
       <div className={styles.button}>
       <div className={styles.button1}>
-      <input type="text" placeholder="XYZ"/>
+      <input type="text" id="xyz" placeholder={inputNumber} value={inputValue} onKeyDown={pressEnter}/>
       </div>
       <div className={styles.button2}>
       <button>lammps</button>
