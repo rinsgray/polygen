@@ -1,7 +1,7 @@
 import * as React from 'react'
 import  Layout  from '../components/layout'
 import * as styles from"./drawing.module.css"
-
+import {Stage, Layer, Circle} from 'react-konva';
 
 
 export default function Home(props){
@@ -24,7 +24,11 @@ export default function Home(props){
     <Layout>
       <div className={styles.draw}>
       <div className={styles.rectangle}>
-      Здесь будет рисовалка
+      <Stage width = {100} height={100}>
+        <Layer>
+          <Circle x={20} y={20} radius={50} fill="green" />
+        </Layer>
+      </Stage>
       </div>
       <div className={styles.button}>
       <div className={styles.button1}>
