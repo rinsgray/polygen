@@ -34,14 +34,13 @@
 
 
 .choice ul{
-  height: 0;
   margin-top: -50px;
   padding-left: 45vw;
-  display: none;
+  visibility: hidden;
 }
 
-.choice button :hover ~ .choice ul{
-  display: block;
+.choice:hover .choice ul{
+  visibility: visible;
 }
 
 .choice li{

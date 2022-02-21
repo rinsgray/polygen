@@ -3,7 +3,6 @@ import  Layout  from '../components/layout'
 import * as styles from"./drawing.module.css"
 import {Stage, Layer, Circle} from 'react-konva';
 
-
 export default function Home(props){
 
   const [inputNumber, setInputNumber] = React.useState("XYZ")
@@ -17,7 +16,9 @@ export default function Home(props){
     else{
       setInputValue()
     }
+
   };
+
 
 
   return(
@@ -31,7 +32,7 @@ export default function Home(props){
           </Stage>
         </div>
         <div className={styles.choice}>
-          <button >lammps</button>
+          <button>lammps</button>
           <ul>
             <li><p>lammps</p></li>
             <li><p>XYZ</p></li>
