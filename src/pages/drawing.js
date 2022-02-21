@@ -7,6 +7,7 @@ export default function Home(props){
 
   const [inputNumber, setInputNumber] = React.useState("XYZ")
   const [inputValue, setInputValue] = React.useState()
+  const [hoverClass, setHoverClass] = React.useState(styles.invis)
   const pressEnter = (e) =>{
     if (e.keyCode === 13){
       let xyz = document.getElementById('xyz').value
@@ -18,7 +19,12 @@ export default function Home(props){
     }
 
   };
-
+  const showSelection = () =>{
+    setHoverClass(styles.vis)
+  }
+  const hideSelection = () =>{
+    setHoverClass(styles.invis)
+  }
 
 
   return(
@@ -32,12 +38,19 @@ export default function Home(props){
           </Stage>
         </div>
         <div className={styles.choice}>
-          <button>lammps</button>
-          <ul>
+          <button
+            onMouseEnter = {showSelection}
+            onMouseLeave = {hideSelection}>
+            lammps
+          </button>
+          <div className={hoverClass}>
+          <ul onMouseEnter = {showSelection}
+          onMouseLeave = {hideSelection}>
             <li><p>lammps</p></li>
             <li><p>XYZ</p></li>
             <li><p>pdb</p></li>
           </ul>
+          </div>
         </div>
         <div className={styles.coef}>
           <input type="text" id="xyz" placeholder={inputNumber} value={inputValue} onKeyDown={pressEnter}/>
