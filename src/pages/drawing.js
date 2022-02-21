@@ -23,21 +23,24 @@ export default function Home(props){
   return(
     <Layout>
       <div className={styles.draw}>
-      <div className={styles.rectangle}>
-      <Stage width = {100} height={100}>
-        <Layer>
-          <Circle x={20} y={20} radius={50} fill="green" />
-        </Layer>
-      </Stage>
-      </div>
-      <div className={styles.button}>
-      <div className={styles.button1}>
-      <input type="text" id="xyz" placeholder={inputNumber} value={inputValue} onKeyDown={pressEnter}/>
-      </div>
-      <div className={styles.button2}>
-      <button>lammps</button>
-      </div>
-      </div>
+        <div className={styles.rectangle}>
+          <Stage width = {100} height={100}>
+            <Layer>
+              <Circle x={20} y={20} radius={50} fill="green" />
+            </Layer>
+          </Stage>
+        </div>
+        <div className={styles.choice}>
+          <button >lammps</button>
+          <ul>
+            <li><p>lammps</p></li>
+            <li><p>XYZ</p></li>
+            <li><p>pdb</p></li>
+          </ul>
+        </div>
+        <div className={styles.coef}>
+          <input type="text" id="xyz" placeholder={inputNumber} value={inputValue} onKeyDown={pressEnter}/>
+        </div>
       </div>
     </Layout>
   )
