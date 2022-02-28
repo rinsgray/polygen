@@ -5,18 +5,20 @@ import {Stage, Layer, Circle} from 'react-konva';
 
 export default function Home(props){
 
+
+  const Number_of_points = 5;
+
   function generateShapes() {
-  return [...Array(10)].map((_, i) => ({
+  return [...Array(Number_of_points)].map((_, i) => ({
     id: i.toString(),
-    x: Math.random() * window.innerWidth,
-    y: Math.random() * window.innerHeight,
+    x: Math.random() * 1000,
+    y: Math.random() * 300,
     rotation: Math.random() * 180,
     isDragging: false,
   }));
 }
 
-const INITIAL_STATE = generateShapes();
-
+  const INITIAL_STATE = generateShapes();
 
   const [inputNumber, setInputNumber] = React.useState("coefficient XYZ")
   const [inputValue, setInputValue] = React.useState()
@@ -82,26 +84,31 @@ const INITIAL_STATE = generateShapes();
     setFormatFile(format)
   }
 
+  const pressPlus = ()=>{
+    Number_of_points +=1
+  }
+  const pressMinus = ()=>{
+    Number_of_points -=1
+  }
+
   return(
     <Layout>
       <div className={styles.draw}>
         <div className={styles.rectangle}>
-          <Stage width={1000} height={1000}>
+          <Stage width={1000} height={300}>
             <Layer>
             {points.map((point) => (
               <Circle
                 radius = {10}
-                key={points.id}
-                id={points.id}
-                x={points.x}
-                y={points.y}
+                key={point.id}
+                id={point.id}
+                x={point.x}
+                y={point.y}
                 fill="black"
                 draggable
-                rotation={points.rotation}
-                shadowOffsetX={points.isDragging ? 10 : 5}
-                shadowOffsetY={points.isDragging ? 10 : 5}
-                scaleX={points.isDragging ? 1.2 : 1}
-                scaleY={points.isDragging ? 1.2 : 1}
+                rotation={point.rotation}
+                scaleX={point.isDragging ? 1.2 : 1}
+                scaleY={point.isDragging ? 1.2 : 1}
                 onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
               />
@@ -109,6 +116,12 @@ const INITIAL_STATE = generateShapes();
             </Layer>
           </Stage>
         </div>
+        <button className={styles.plusPoint} onClick={pressPlus}>
+        +
+        </button>
+        <button className={styles.minusPoint} onClick={pressMinus}>
+        -
+        </button>
         <div className={styles.choice}>
           <button className={styles.buttonChoice}
             onMouseEnter = {showSelection}
