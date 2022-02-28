@@ -8,9 +8,11 @@ export default function Home(props){
   const [inputNumber, setInputNumber] = React.useState("XYZ")
   const [inputValue, setInputValue] = React.useState()
   const [hoverClass, setHoverClass] = React.useState(styles.invis)
+  const [formatFile, setFormatFile] = React.useState('lammps')
+  const [hideInput, setHideInput] = React.useState(styles.nonecoef)
   const pressEnter = (e) =>{
     if (e.keyCode === 13){
-      let xyz = document.getElementById('xyz').value
+      let xyz = document.getElementById('xyzInput').value
       setInputNumber(xyz);
       setInputValue("");
     }
@@ -25,8 +27,22 @@ export default function Home(props){
   const hideSelection = () =>{
     setHoverClass(styles.invis)
   }
-
-
+  const choiceFormatL = () =>{
+    let format = 'lammps'
+    setHideInput(styles.nonecoef)
+    setFormatFile(format)
+  }
+  const choiceFormatX = () =>{
+    let format = 'XYZ'
+    setHideInput(styles.coef)
+    setFormatFile(format)
+  }
+  const choiceFormatP = () =>{
+    let format = 'pdb'
+    setHideInput(styles.nonecoef)
+    setFormatFile(format)
+  }
+  
   return(
     <Layout>
       <div className={styles.draw}>
@@ -38,22 +54,22 @@ export default function Home(props){
           </Stage>
         </div>
         <div className={styles.choice}>
-          <button
+          <button className={styles.buttonChoice}
             onMouseEnter = {showSelection}
             onMouseLeave = {hideSelection}>
-            lammps
+            {formatFile}
           </button>
           <div className={hoverClass}>
           <ul onMouseEnter = {showSelection}
           onMouseLeave = {hideSelection}>
-            <li><p>lammps</p></li>
-            <li><p>XYZ</p></li>
-            <li><p>pdb</p></li>
+            <li id='lammps' onClick={choiceFormatL}><p>lammps</p></li>
+            <li id='xyz' onClick={choiceFormatX}><p>XYZ</p></li>
+            <li id='pdb' onClick={choiceFormatP}><p>pdb</p></li>
           </ul>
           </div>
         </div>
-        <div className={styles.coef}>
-          <input type="text" id="xyz" placeholder={inputNumber} value={inputValue} onKeyDown={pressEnter}/>
+        <div className={hideInput}>
+          <input type="text" id="xyzInput" placeholder={inputNumber} value={inputValue} onKeyDown={pressEnter}/>
         </div>
       </div>
     </Layout>
