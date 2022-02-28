@@ -1,19 +1,18 @@
 import * as React from 'react'
 import  Layout  from '../components/layout'
 import * as styles from"./drawing.module.css"
-import {Stage, Layer, Circle} from 'react-konva';
+import {Stage, Layer, Circle, Rect} from 'react-konva';
 
 export default function Home(props){
 
 
-  const Number_of_points = 5;
+  const Number_of_points = 6;
 
   function generateShapes() {
   return [...Array(Number_of_points)].map((_, i) => ({
     id: i.toString(),
-    x: Math.random() * 1000,
-    y: Math.random() * 300,
-    rotation: Math.random() * 180,
+    x: 50 + i.toString() * 30,
+    y: 50,
     isDragging: false,
   }));
 }
@@ -84,19 +83,17 @@ export default function Home(props){
     setFormatFile(format)
   }
 
-  const pressPlus = ()=>{
-    Number_of_points +=1
-  }
-  const pressMinus = ()=>{
-    Number_of_points -=1
-  }
-
   return(
     <Layout>
       <div className={styles.draw}>
         <div className={styles.rectangle}>
-          <Stage width={1000} height={300}>
+          <Stage width={1000} height={300} margin-top={300}>
             <Layer>
+              <Rect
+                width={250}
+                height={300}
+                fill='grey'
+              />
             {points.map((point) => (
               <Circle
                 radius = {10}
@@ -116,12 +113,7 @@ export default function Home(props){
             </Layer>
           </Stage>
         </div>
-        <button className={styles.plusPoint} onClick={pressPlus}>
-        +
-        </button>
-        <button className={styles.minusPoint} onClick={pressMinus}>
-        -
-        </button>
+
         <div className={styles.choice}>
           <button className={styles.buttonChoice}
             onMouseEnter = {showSelection}
