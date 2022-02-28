@@ -87,11 +87,11 @@ export default function Home(props){
     <Layout>
       <div className={styles.draw}>
         <div className={styles.rectangle}>
-          <Stage width={1000} height={300} margin-top={300}>
+          <Stage width={1000} height={400}>
             <Layer>
               <Rect
                 width={250}
-                height={300}
+                height={400}
                 fill='grey'
               />
             {points.map((point) => (
@@ -108,6 +108,14 @@ export default function Home(props){
                 scaleY={point.isDragging ? 1.2 : 1}
                 onDragStart={handleDragStart}
                 onDragEnd={handleDragEnd}
+                onMouseEnter={e => {
+                  const container = e.target.getStage().container();
+                  container.style.cursor = "pointer";
+                }}
+                onMouseLeave={e => {
+                  const container = e.target.getStage().container();
+                  container.style.cursor = "default";
+                }}
               />
               ))}
             </Layer>
