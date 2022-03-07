@@ -117,7 +117,7 @@ export default function Home(props){
                 onMouseEnter={e => {
                   const container = e.target.getStage().container();
                   container.style.cursor = "pointer";
-                  setCoordinates(point.x)
+                  setCoordinates(e.target.absolutePosition().x)
 
                 }}
                 onMouseLeave={e => {
