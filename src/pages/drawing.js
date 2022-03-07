@@ -1,7 +1,7 @@
 import * as React from 'react'
 import  Layout  from '../components/layout'
 import * as styles from"./drawing.module.css"
-import {Stage, Layer, Circle, Rect} from 'react-konva';
+import {Stage, Layer, Circle, Rect, Text} from 'react-konva';
 
 export default function Home(props){
 
@@ -24,7 +24,8 @@ export default function Home(props){
   const [hoverClass, setHoverClass] = React.useState(styles.invis)
   const [formatFile, setFormatFile] = React.useState('lammps')
   const [hideInput, setHideInput] = React.useState(styles.nonecoef)
-  const [points, setPoints] = React.useState(INITIAL_STATE);
+  const [points, setPoints] = React.useState(INITIAL_STATE)
+  const [coordinates,setCoordinates] = React.useState('0 | 0')
 
     const handleDragStart = (e) => {
       const id = e.target.id();
@@ -82,6 +83,11 @@ export default function Home(props){
     setHideInput(styles.nonecoef)
     setFormatFile(format)
   }
+  const Coord = 0;
+  const coordinatesOfPoints = ()=>{
+
+    setCoordinates(Coord)
+  }
 
   return(
     <Layout>
@@ -111,11 +117,20 @@ export default function Home(props){
                 onMouseEnter={e => {
                   const container = e.target.getStage().container();
                   container.style.cursor = "pointer";
+                  Coord = point.x
+
                 }}
                 onMouseLeave={e => {
                   const container = e.target.getStage().container();
                   container.style.cursor = "default";
                 }}
+              />
+              ))}
+              {points.map((point) => (
+              <Text
+                x = {110}
+                y = {15}
+                text = {coordinates}
               />
               ))}
             </Layer>
