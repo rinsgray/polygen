@@ -13,7 +13,6 @@ export default function Home(props){
     id: i.toString(),
     x: 50 + i.toString() * 30,
     y: 50,
-    isDragging: false,
   }));
 }
 
@@ -25,7 +24,8 @@ export default function Home(props){
   const [formatFile, setFormatFile] = React.useState('lammps')
   const [hideInput, setHideInput] = React.useState(styles.nonecoef)
   const [points, setPoints] = React.useState(INITIAL_STATE)
-  const [coordinates,setCoordinates] = React.useState('0 | 0')
+  const [coordinatesX,setCoordinatesX] = React.useState('0')
+  const [coordinatesY,setCoordinatesY] = React.useState('0')
 
     const handleDragStart = (e) => {
       const id = e.target.id();
@@ -38,6 +38,7 @@ export default function Home(props){
         })
       );
     };
+
     const handleDragEnd = (e) => {
       setPoints(
         points.map((point) => {
@@ -49,8 +50,6 @@ export default function Home(props){
       );
     };
 
-
-
   const pressEnter = (e) =>{
     if (e.keyCode === 13){
       let xyz = document.getElementById('xyzInput').value
@@ -60,33 +59,32 @@ export default function Home(props){
     else{
       setInputValue()
     }
-
   };
+
   const showSelection = () =>{
     setHoverClass(styles.vis)
   }
+
   const hideSelection = () =>{
     setHoverClass(styles.invis)
   }
+
   const choiceFormatL = () =>{
     let format = 'lammps'
     setHideInput(styles.nonecoef)
     setFormatFile(format)
   }
+
   const choiceFormatX = () =>{
     let format = 'XYZ'
     setHideInput(styles.coef)
     setFormatFile(format)
   }
+
   const choiceFormatP = () =>{
     let format = 'pdb'
     setHideInput(styles.nonecoef)
     setFormatFile(format)
-  }
-  const Coord = 0;
-  const coordinatesOfPoints = ()=>{
-
-    setCoordinates(Coord)
   }
 
   return(
@@ -117,22 +115,38 @@ export default function Home(props){
                 onMouseEnter={e => {
                   const container = e.target.getStage().container();
                   container.style.cursor = "pointer";
-                  setCoordinates(e.target.absolutePosition().x)
-
                 }}
                 onMouseLeave={e => {
                   const container = e.target.getStage().container();
                   container.style.cursor = "default";
                 }}
+                onMouseMove={e => {
+                  if (e.target.absolutePosition().x > 250){
+                    setCoordinatesX((e.target.absolutePosition().x)-250)
+                    setCoordinatesY(e.target.absolutePosition().y)
+                  } else{
+                    setCoordinatesX('0')
+                    setCoordinatesY('0')
+                  }
+                }}
               />
               ))}
-              {points.map((point) => (
+
               <Text
-                x = {110}
+                x = {100}
                 y = {15}
-                text = {coordinates}
+                text = {coordinatesX}
               />
-              ))}
+              <Text
+                x = {125}
+                y = {15}
+                text = '|'
+              />
+              <Text
+                x = {132}
+                y = {15}
+                text = {coordinatesY}
+              />
             </Layer>
           </Stage>
         </div>
