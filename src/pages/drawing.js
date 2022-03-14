@@ -5,7 +5,7 @@ import {Stage, Layer, Circle, Rect, Text} from 'react-konva';
 
 export default function Home(props){
 
-
+  const Colors =['03045e','023e8a','0077b6','0096c7','00b4d8','48cae4'];
   const Number_of_points = 6;
 
   function generateShapes() {
@@ -105,9 +105,14 @@ export default function Home(props){
                 id={point.id}
                 x={point.x}
                 y={point.y}
-                fill="black"
+                fill={'green'}
                 draggable
                 rotation={point.rotation}
+                shadowColor="black"
+                shadowBlur={8}
+                shadowOpacity={0.6}
+                shadowOffsetX={point.isDragging ? 4 : 1}
+                shadowOffsetY={point.isDragging ? 4 : 1}
                 scaleX={point.isDragging ? 1.2 : 1}
                 scaleY={point.isDragging ? 1.2 : 1}
                 onDragStart={handleDragStart}

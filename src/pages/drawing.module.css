@@ -74,7 +74,7 @@
    display: block;
    margin-left: auto;
    margin-right: auto;
-   margin-top: 20px;
+   margin-top: -17px;
    z-index: 2;
    background: white;
    border: 2px solid;
@@ -91,7 +91,7 @@
    display: block;
    margin-left: auto;
    margin-right: auto;
-   margin-top: 20px;
+   margin-top: -17px;
    z-index: 2;
    background: white;
    border: 2px solid grey;
