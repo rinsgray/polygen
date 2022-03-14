@@ -162,7 +162,6 @@ export default function Home(props){
           onMouseLeave = {hideSelection}>
             <li id='lammps' onClick={choiceFormatL}><p>lammps</p></li>
             <li id='xyz' onClick={choiceFormatX}><p>XYZ</p></li>
-            <li id='pdb' onClick={choiceFormatP}><p>pdb</p></li>
           </ul>
           </div>
         </div>
