@@ -1,7 +1,7 @@
 import * as React from 'react'
 import  Layout  from '../components/layout'
 import * as styles from"./drawing.module.css"
-import {Stage, Layer, Circle, Rect, Text} from 'react-konva';
+import {Stage, Layer, Circle, Rect, Text, Line} from 'react-konva';
 
 export default function Home(props){
 
@@ -9,15 +9,25 @@ export default function Home(props){
   const Number_of_points = 6;
 
   function generateShapes() {
-  return [...Array(Number_of_points)].map((_, i) => ({
-    id: i.toString(),
-    color: Colors[i.toString()],
-    x: 50 + i.toString() * 30,
-    y: 50,
-  }));
-}
+    return [...Array(Number_of_points)].map((_, i) => ({
+      id: i.toString(),
+      color: Colors[i.toString()],
+      x: 50 + i.toString() * 30,
+      y: 50,
+    }));
+  }
+
+  function generateLine() {
+    return [...Array(1)].map((_, i) => ({
+      id: i.toString(),
+      x: 600 + i.toString() * 50,
+      y: 200,
+      points: []
+    }));
+  }
 
   const INITIAL_STATE = generateShapes();
+  const LINE_CONST = generateLine();
 
   const [inputNumber, setInputNumber] = React.useState("coefficient XYZ")
   const [inputValue, setInputValue] = React.useState()
@@ -27,6 +37,11 @@ export default function Home(props){
   const [points, setPoints] = React.useState(INITIAL_STATE)
   const [coordinatesX,setCoordinatesX] = React.useState('0')
   const [coordinatesY,setCoordinatesY] = React.useState('0')
+  const [linePoints, setLinePoints] = React.useState(LINE_CONST)
+  const [lineCoordX1, setLineCoordX1] = React.useState()
+  const [lineCoordY1, setLineCoordY1] = React.useState()
+  const [lineCoordX2, setLineCoordX2] = React.useState()
+  const [lineCoordY2, setLineCoordY2] = React.useState()
 
     const handleDragStart = (e) => {
       const id = e.target.id();
@@ -45,6 +60,29 @@ export default function Home(props){
         points.map((point) => {
           return {
             ...point,
+            isDragging: false,
+          };
+        })
+      );
+    };
+
+    const handleDragStartLine = (e) => {
+      const id = e.target.id();
+      setLinePoints(
+        linePoints.map((line) => {
+          return {
+            ...line,
+            isDragging: line.id === id,
+          };
+        })
+      );
+    };
+
+    const handleDragEndLine = (e) => {
+      setLinePoints(
+        linePoints.map((line) => {
+          return {
+            ...line,
             isDragging: false,
           };
         })
@@ -99,6 +137,8 @@ export default function Home(props){
                 height={400}
                 fill='grey'
               />
+            </Layer>
+            <Layer>
             {points.map((point) => (
               <Circle
                 radius = {10}
@@ -137,7 +177,59 @@ export default function Home(props){
                 }}
               />
               ))}
-
+            </Layer>
+            <Layer>
+            {linePoints.map((line) => (
+              <Circle
+                radius = {5}
+                key={line.id}
+                id={line.id}
+                x={line.x}
+                y={line.y}
+                fill='red'
+                draggable
+                rotation={line.rotation}
+                scaleX={line.isDragging ? 1.2 : 1}
+                scaleY={line.isDragging ? 1.2 : 1}
+                onDragStart={handleDragStartLine}
+                onDragEnd={handleDragEndLine}
+                onMouseMove={e => {
+                  setLineCoordX1(e.target.absolutePosition().x)
+                  setLineCoordY1(e.target.absolutePosition().y)
+                }}
+              />
+            ))}
+            {linePoints.map((line) => (
+              <Circle
+                radius = {5}
+                key={line.id}
+                id={line.id}
+                x={line.x + 50}
+                y={line.y}
+                fill='red'
+                draggable
+                rotation={line.rotation}
+                scaleX={line.isDragging ? 1.2 : 1}
+                scaleY={line.isDragging ? 1.2 : 1}
+                onDragStart={handleDragStartLine}
+                onDragEnd={handleDragEndLine}
+                onMouseMove={e => {
+                  setLineCoordX2(e.target.absolutePosition().x)
+                  setLineCoordY2(e.target.absolutePosition().y)
+                }}
+              />
+            ))}
+              <Line
+                x = {0}
+                y = {0}
+                width={750}
+                height={400}
+                points = {[lineCoordX2,lineCoordY2,lineCoordX1,lineCoordY1]}
+                stroke = "red"
+                strokeWidth = {3}
+                />
+            </Layer>
+            <Layer>
               <Text
                 x = {100}
                 y = {15}
@@ -153,6 +245,7 @@ export default function Home(props){
                 y = {15}
                 text = {coordinatesY}
               />
+
             </Layer>
           </Stage>
         </div>
