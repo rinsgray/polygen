@@ -1,9 +1,13 @@
 import * as React from 'react'
 import  Layout  from '../components/layout'
 import * as styles from"./drawing.module.css"
-import {Stage, Layer, Circle, Rect, Text, Line} from 'react-konva';
+import {Stage, Layer, Circle, Rect, Text, Line, Transformer} from 'react-konva';
 
 export default function Home(props){
+
+
+
+
 
   const Colors =['#03045e','#023e8a','#0077b6','#0096c7','#00b4d8','#48cae4'];
   const Number_of_points = 6;
@@ -26,6 +30,16 @@ export default function Home(props){
     }));
   }
 
+  function generateCrack(){
+    return (
+      {
+        points: [lineCoordX2,lineCoordY2,lineCoordX1,lineCoordY1],
+        stroke: "red",
+        strokeWidth: 3
+      }
+    )
+  }
+
   const INITIAL_STATE = generateShapes();
   const LINE_CONST = generateLine();
 
@@ -38,10 +52,88 @@ export default function Home(props){
   const [coordinatesX,setCoordinatesX] = React.useState('0')
   const [coordinatesY,setCoordinatesY] = React.useState('0')
   const [linePoints, setLinePoints] = React.useState(LINE_CONST)
-  const [lineCoordX1, setLineCoordX1] = React.useState()
-  const [lineCoordY1, setLineCoordY1] = React.useState()
-  const [lineCoordX2, setLineCoordX2] = React.useState()
-  const [lineCoordY2, setLineCoordY2] = React.useState()
+  const [lineCoordX1, setLineCoordX1] = React.useState(0)
+  const [lineCoordY1, setLineCoordY1] = React.useState(0)
+  const [lineCoordX2, setLineCoordX2] = React.useState(0)
+  const [lineCoordY2, setLineCoordY2] = React.useState(0)
+
+
+  const Rectangle = ({ shapeProps, isSelected, onSelect, onChange }) => {
+  const shapeRef = React.useRef();
+  const trRef = React.useRef();
+
+  React.useEffect(() => {
+    if (isSelected) {
+      // we need to attach transformer manually
+      trRef.current.nodes([shapeRef.current]);
+      trRef.current.getLayer().batchDraw();
+    }
+  }, [isSelected]);
+
+  return (
+    <React.Fragment>
+      <Line
+        onClick={onSelect}
+        onTap={onSelect}
+        ref={shapeRef}
+        {...shapeProps}
+        draggable
+        onDragEnd={(e) => {
+          onChange({
+            ...shapeProps,
+            x: e.target.x(),
+            y: e.target.y(),
+          });
+          setCoordinatesX(e.target.x())
+        }}
+        onTransformEnd={(e) => {
+          // transformer is changing scale of the node
+          // and NOT its width or height
+          // but in the store we have only width and height
+          // to match the data better we will reset scale on transform end
+          const node = shapeRef.current;
+          const scaleX = node.scaleX();
+          const scaleY = node.scaleY();
+
+          // we will reset it back
+          node.scaleX(1);
+          node.scaleY(1);
+          onChange({
+            ...shapeProps,
+            points: points.map((point, i) =>{
+              return (
+                ...{point*scaleX}
+
+              )
+            })
+          });
+        }}
+      />
+      {isSelected && (
+        <Transformer
+          ref={trRef}
+          boundBoxFunc={(oldBox, newBox) => {
+            // limit resize
+            if (newBox.width < 5 || newBox.height < 5) {
+              return oldBox;
+            }
+            return newBox;
+          }}
+        />
+      )}
+    </React.Fragment>
+  );
+};
+
+const initialLine =  [{
+    points: [200,100,250,100],
+    stroke: 3,
+    fill: 'red',
+    id: 'rect1',
+  }]
+
+const [crack, setCrack] = React.useState(initialLine);
+const [selectedId, selectShape] = React.useState(null);
 
     const handleDragStart = (e) => {
       const id = e.target.id();
@@ -179,6 +271,9 @@ export default function Home(props){
               ))}
             </Layer>
             <Layer>
+            <Line
+              shareProps = {generateCrack()}
+            />
             {linePoints.map((line) => (
               <Circle
                 radius = {5}
@@ -196,7 +291,13 @@ export default function Home(props){
                 onMouseMove={e => {
                   setLineCoordX1(e.target.absolutePosition().x)
                   setLineCoordY1(e.target.absolutePosition().y)
+                  generateCrack()
                 }}
+                onMouseDown={e=>{
+                  setLineCoordX1(e.target.absolutePosition().x)
+                  setLineCoordY1(e.target.absolutePosition().y)
+                  }
+                }
               />
             ))}
             {linePoints.map((line) => (
@@ -214,20 +315,30 @@ export default function Home(props){
                 onDragStart={handleDragStartLine}
                 onDragEnd={handleDragEndLine}
                 onMouseMove={e => {
-                  setLineCoordX2(e.target.absolutePosition().x)
-                  setLineCoordY2(e.target.absolutePosition().y)
+                setLineCoordX2(e.target.absolutePosition().x)
+                setLineCoordY2(e.target.absolutePosition().y)
+                generateCrack()
                 }}
               />
+
             ))}
-              <Line
-                x = {0}
-                y = {0}
-                width={750}
-                height={400}
-                points = {[lineCoordX2,lineCoordY2,lineCoordX1,lineCoordY1]}
-                stroke = "red"
-                strokeWidth = {3}
-                />
+            {crack.map((line, i) => {
+          return (
+            <Rectangle
+              key={i}
+              shapeProps={line}
+              isSelected={line.id === selectedId}
+              onSelect={() => {
+                selectShape(line.id);
+              }}
+              onChange={(newAttrs) => {
+                const lines = crack.slice();
+                lines[i] = newAttrs;
+                setCrack(lines);
+              }}
+            />
+          );
+        })}
             </Layer>
             <Layer>
               <Text
