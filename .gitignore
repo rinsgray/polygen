@@ -1,6 +1,7 @@
 node_modules/
 .cache/
 public
+polygen_backend/polyhandler/__pycache__
 polygen_backend/polygen_backend/__pycache__
 polygen_backend/polyhandler/migrations
 polygen_backend/db.sqlite3

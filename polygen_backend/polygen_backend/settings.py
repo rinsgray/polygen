@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graphene_django',
-    'polyhandler.apps.polyhandlerConfig',
+    'polyhandler.apps.PolyhandlerConfig',
 ]
 
 GRAPHENE = {
