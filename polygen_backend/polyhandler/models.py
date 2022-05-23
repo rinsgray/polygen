@@ -15,7 +15,7 @@ class Post(models.Model):
          verbose_name_plural = _("Posts")
 
     def __str__(self):
-            return self.name
+            return self.title
 
     def get_absolute_url(self):
             return reverse("post_detail", kwargs={"slug": self.slug})
@@ -23,3 +23,14 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
             self.slug = slugify(self.title)
             super().save(*args, **kwargs)
+
+
+class Crack(models.Model):
+    title = models.CharField(_("Crack number"), max_length=100)
+    coordinates = models.FloatField(_("Crack coordinates"), max_length=100)
+    class Meta:
+         verbose_name = _("Crack")
+         verbose_name_plural = _("Cracks")
+         
+    def __str__(self):
+            return self.title

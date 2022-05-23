@@ -98,15 +98,7 @@ export default function Home(props){
           // we will reset it back
           node.scaleX(1);
           node.scaleY(1);
-          onChange({
-            ...shapeProps,
-            points: points.map((point, i) =>{
-              return (
-                ...{point*scaleX}
 
-              )
-            })
-          });
         }}
       />
       {isSelected && (
