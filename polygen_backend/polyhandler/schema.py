@@ -1,11 +1,12 @@
 import graphene
 from graphene_django.types import DjangoObjectType
-from polyhandler.models import Post
+from polyhandler.models import Post, Crack
 
 
 class PostType(DjangoObjectType):
     class Meta:
         model = Post
+        model = Crack
 
 
 class Query(object):
