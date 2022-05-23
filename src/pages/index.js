@@ -1,14 +1,28 @@
-import * as React from 'react'
-import  Layout  from '../components/layout'
 import * as styles from"./index.module.css"
+import React from "react"
+import { graphql, Link } from "gatsby"
+import Layout from "../components/layout"
 
+export default ({ data }) => (
+  <Layout>
+    {data.DJANGO.allPosts.map((blog, i) => (
+      <Link key={i} to={blog.slug}>
+        <h2>{blog.title}</h2>
+        <p>{blog.summary}</p>
+      </Link>
+    ))}
+  </Layout>
+)
 
-export default function Home(){
-  return(
-    <Layout header='Главная'>
-      <div className={styles.text}>
-      Это главная старница проекта Polygen.
-      </div>
-    </Layout>
-  )
-}
+export const query = graphql`
+  query {
+    DJANGO {
+      allPosts {
+        keywords
+        slug
+        summary
+        title
+      }
+    }
+  }
+`
