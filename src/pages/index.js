@@ -3,6 +3,20 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 
+
+
+export const query = graphql`
+  query {
+    DJANGO {
+      allCracks {
+        keywords
+        slug
+        summary
+        title
+      }
+    }
+  }
+`
 export default ({ data }) => (
   <Layout>
     {data.DJANGO.allPosts.map((blog, i) => (
@@ -13,16 +27,3 @@ export default ({ data }) => (
     ))}
   </Layout>
 )
-
-export const query = graphql`
-  query {
-    DJANGO {
-      allPosts {
-        keywords
-        slug
-        summary
-        title
-      }
-    }
-  }
-`
